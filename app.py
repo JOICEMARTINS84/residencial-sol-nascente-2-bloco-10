@@ -10,7 +10,7 @@ from pathlib import Path
 from datetime import date
 from decimal import Decimal, ROUND_HALF_UP
 import streamlit as st
-from recibo_bloco10 import imagem, exportar, dinheiro, MESES
+from recibo_bloco10_v2 import imagem, exportar, dinheiro, MESES
 BASE=Path(__file__).parent
 DB=BASE/'pagamentos.sqlite3'
 st.set_page_config(page_title='Gestão Condominial | Bloco 10',page_icon='🏢',layout='wide')
