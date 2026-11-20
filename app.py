@@ -31,7 +31,7 @@ import hmac
 import hashlib
 assinatura = hashlib.sha256(senha.encode()).digest()
 if st.session_state.get('acesso') != assinatura:
-    with st.form('acesso', clear_on_submit=True):
+    with st.form('formulario_login', clear_on_submit=True):
         entrada = st.text_input('Senha da administração', type='password')
         entrar = st.form_submit_button('Entrar')
     if entrar:
