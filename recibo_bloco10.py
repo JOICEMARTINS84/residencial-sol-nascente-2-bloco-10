@@ -1,6 +1,7 @@
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
+from base64 import b64decode
 BASE=Path(__file__).parent
 MESES=['janeiro','fevereiro','mar\u00e7o','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro']
 
@@ -15,7 +16,7 @@ def fonte(tamanho, bold=False):
 def dinheiro(c):
     return 'R$ '+f'{c/100:,.2f}'.replace(',','_').replace('.',',').replace('_','.')
 
-def imagem(reg):
+def imagem(reg, rubrica=False):
     from num2words import num2words
     n,apt,c,mes,ano,data,forma,nome=reg
     im=Image.new('RGB',(2143,734),'white')
@@ -60,6 +61,12 @@ def imagem(reg):
         if forma==label:d.line([(x+7,423),(x+15,434),(x+31,413)],fill=verde,width=5,joint='curve')
         t(x+51,400,label,37)
     t(78,532,'PAGO',58,True,verde)
+    if rubrica:
+        # Modelo de rubrica: aplicar apenas com autorização da síndica.
+        mascara=Image.open(BytesIO(b64decode('iVBORw0KGgoAAAANSUhEUgAAAVMAAACRAQAAAABWZ2bSAAAFF0lEQVR42qVYu3LjNhQ9ADmGCs1SpQuHUr4gKl0wlpL8iD/BRQoVHgvrSZEyf2B/RorMGtlkJi73E5DdLVRSMy5oD8WbAuBTJAFN2NiyDq8PLu49OBfA/3oCOfAFP/5TCH/s5AQO0QlxT8EuTsBenYDNT1hb5h+XnYBF6o/l8MeG+gQOyh/rWQ5zyoG5F1QQkR7ethaHDYCLsSZohP0DAGfffPSgsCWJgNLMp81IA5jnPtioMG+kHmu7+QwAB5n6ULDhPeJOX231TtzY5bPd4jM3Byr3eeumW6YqnksXh+mu7Ph07cIuH8uOf1kOYUuheypfyouJL11kw/rAO3RZBtfaZiVdnsJVk3cVGeVqIlZxFArR+BnAX6ouVsjW47WrGkIdqNG4s+rr2ZhYt5eGK4BpT8lNRoSSt3cNiVNwVOs/bMbiTpRb1Evsd7Il6uEYtpK7BR8V4FYatFAj6+MAgqogTUw+gq1OCG5EXY9g6zTomXTkoQKEilxbkdRFlgBAXOvhUdzGutuly349wm7quHnrkD2WtroGEwN7V737ezcur3PEOu0iu9hQdeJWTzzihVLTahVkc5SHqGbQqbDN0V7EjYJslRhLj+JW6eV60loM//co7qbW11lbb5XuYFm99m453Hfj1umdSEO9KD+HqsuhoTnrlkmM0N2LUNbHVlvS48ZpIAqAQzS2aTO0S6uMZe3eYu16TqrMzxUgwOuqOiqHrKQkNABI4LJbDtUbaUmJqAAixYddPSuxcxAHXsDruMyWQ7U59hemcW+zfl0fQVGrT4K/DKVVaWt4M98zW0ItSoGiWflZY0Adwue9yc7HY1tq1QFCGjEUD8YHVZvJm+24tkZ1bpr9wYT9pc5MxTcWRCa+/XkLgFHW5z2/zcy8EAkb4hbAOzz3YIWy89ji8iDl2dpI+M2hIVsVByLSjDRwS4oQKcw1IEj1+LMIh1DTZAYE9AOwNJp9SeseK09FKhSwASgNCCT1XIKR7rH9Eb3XQgIXYCSjglGgV0DUaVZTD9uUaVMOQYH5B0FCF8C2czQurUsNlDEvIsMqiYr5lwIBqXbJfgKAi9dKHSY7rN6+fLieAkl7Zba89XuEiD8bS8XucvHnPTRTewDRvmPlckDY0lkhSPf59pXmRLIl2Ca/F1+BicV+j3DPc+wOKQ6yx+9cPwJk1eEW5zrf4eHnDF/73GQOIDb9G6RYMVJ3QFD0HUZRCuDC9JnQKAJqKEGHw/I3AAvTZxPNClCjEjs5e+IAkn+sVeMvxduwf3izvQkACzlNsRv2D7vGYLHCTNOw8zPOP43s1L11O0QdG1vHCqc1YgYrsmBs7rZfGuwkm45hw0/ml7Wp5uWnkfni3BS0ygFgzRQboXtlVSwFwHIavX64NVikAIKUxtynVW/BNIBIb/WIP+MWyzWA2aMa3rOwfYdwLX2ufmIhXfcqvMQWVYO4HWISAYj0eFyLzak5bg089vC6jAE4Ztjy5LtJmuNWP4eGQ8TZyzi28jQJcO6Y+0tbojfASvrdwum0NlBDHKK6hII3B7ao0zHdObCLykzWc/pQndUpZU/cgS3D/v165qALXomnPN+5sPX11vWja2ix1jmIgwKecUNMXXRr+xb/9OyNZZL5chA/HuCLRe9h1nlsfiOCd9zZwQNrF3ftQcFOOIKUR9x9k7UDm0kAgdIecY1vXxVet50sAwSlfjejpBhRz7jY96yIKPXERkTF+D1qgzD55PbU5z/BbrDMTag0ZwAAAABJRU5ErkJggg=='))).convert('L')
+        x=1575-mascara.width//2
+        y=600-mascara.height
+        im.paste('#081d4d',(x,y,x+mascara.width,y+mascara.height),mascara)
     d.line((1160,605,1990,605),fill=azul,width=3)
     t(1575,621,'Daniela — Síndica',34,False,cinza,'mt')
     return im
