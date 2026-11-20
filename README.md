@@ -1,6 +1,6 @@
 # Residencial Sol Nascente 2 — Bloco 10
 
-Endereço escolhido para o aplicativo no Streamlit: https://residencial-sol-nascente-2-bloco-10d.streamlit.app/
+Endereço escolhido para o aplicativo no Streamlit: https://residencial-sol-nascente-2-bloco-10.streamlit.app/
 
 Aplicativo Streamlit da síndica Daniela. Cadastro de condôminos, pagamentos, histórico, relatórios e recibos PDF/JPG. São 20 apartamentos, do térreo ao quarto andar.
 
