@@ -106,7 +106,8 @@ def consultar(sql='SELECT * FROM recibos ORDER BY id DESC',args=()):
     with conectar() as db:return db.execute(sql,args).fetchall()
 
 def exibir(r):
-    im=imagem(r); st.image(im,use_container_width=True)
+    incluir_rubrica=st.checkbox('Incluir rubrica autorizada pela síndica Daniela',key=f'rubrica_{r[0]}')
+    im=imagem(r,rubrica=incluir_rubrica); st.image(im,use_container_width=True)
     nome=f'Recibo_AP{r[1]}_{MESES[r[3]-1]}_{r[4]}_{r[0]:04d}'
     a,b=st.columns(2)
     a.download_button('Baixar JPG',exportar(im,'JPG'),nome+'.jpg','image/jpeg',key=f'jpg{r[0]}')
